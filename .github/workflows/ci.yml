@@ -1,0 +1,70 @@
+# Flujo: push/PR → instalación → lint → test/cobertura → build → Docker → Pages.
+name: Practica 3 - CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    name: Validar, probar y construir
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@v6
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Instalar dependencias
+        run: npm install --no-audit --no-fund
+
+      - name: Revisión de sintaxis
+        run: npm run lint
+
+      - name: Pruebas unitarias y de integración con cobertura
+        run: npm test
+
+      - name: Construir frontend para Pages
+        run: npm run build
+
+      - name: Verificar archivos generados
+        run: test -s dist/index.html && test -s dist/app.js && test -s dist/style.css
+
+      - name: Construir imagen Docker
+        run: docker build -t practica3-cicd-itla:${{ github.sha }} .
+
+      - name: Preparar GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v5
+
+      - name: Subir sitio a Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  desplegar:
+    name: Publicar en GitHub Pages
+    needs: validar
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Desplegar sitio web
+        id: deployment
+        uses: actions/deploy-pages@v4

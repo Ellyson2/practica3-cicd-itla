@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#132847">
+  <title>Tablero DevOps | Práctica 3 ITLA</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div class="brand"><span class="mark" aria-hidden="true">◈</span><span>ITLA · DEVOPS LAB</span></div>
+      <span class="header-tag">PRÁCTICA 03 · CI/CD</span>
+    </header>
+    <section class="hero">
+      <p class="eyebrow">Automatización · GitHub Actions</p>
+      <h1>Tu trabajo, <span>en movimiento.</span></h1>
+      <p>Un tablero de tareas para demostrar integración continua, pruebas automatizadas y despliegue continuo.</p>
+      <div class="state"><span class="dot"></span><span id="modo">Iniciando aplicación…</span></div>
+    </section>
+    <section class="panel" aria-labelledby="titulo-panel">
+      <div class="panel-heading"><div><p class="eyebrow">TABLERO DE TRABAJO</p><h2 id="titulo-panel">Mis tareas</h2></div><span class="counter" id="contador">0 pendientes</span></div>
+      <form id="form-tarea" class="task-form">
+        <label class="sr-only" for="titulo">Título de la nueva tarea</label>
+        <input id="titulo" name="titulo" placeholder="Ej. Configurar GitHub Actions" maxlength="80" required autocomplete="off">
+        <button type="submit" id="agregar">+ Agregar tarea</button>
+      </form>
+      <p id="error" class="error" role="alert" hidden></p>
+      <ul id="lista" class="task-list" aria-label="Lista de tareas"></ul>
+      <div id="vacio" class="empty"><span aria-hidden="true">✓</span><strong>¡Todo al día!</strong><p>Agrega tu primera tarea para comenzar.</p></div>
+      <div class="bottom-line"><span id="total">0 tareas en total</span><span>Agregar · completar · eliminar</span></div>
+    </section>
+    <footer>Proyecto académico · Electiva DevOps · ITLA · 2026</footer>
+  </main>
+</body>
+</html>
