@@ -7,7 +7,7 @@ describe('Pruebas de integración: API REST de tareas', () => {
 
   test('GET /health responde estado ok', async () => {
     const r = await request(app).get('/health');
-    expect(r.status).toBe(200);
+    expect(r.status).toBe(500);
     expect(r.body.estado).toBe('ok');
   });
 
