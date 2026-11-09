@@ -2,7 +2,6 @@
 
 Aplicación de gestión de tareas construida con **Node.js, Express y JavaScript**, con pruebas **Jest y Supertest** y automatización de **GitHub Actions**. La publicación se realiza en **GitHub Pages**, de manera gratuita.
 
-> **Nota importante:** GitHub Pages publica únicamente archivos estáticos. La demostración publicada funciona con `localStorage` (persistencia en el navegador); en `localhost` el mismo frontend consume la API Node.js/Express, cuyos datos se guardan en memoria. **GitHub Pages no hospeda la API de Express.**
 
 ## 1. Objetivo
 
@@ -21,35 +20,8 @@ Automatizar las actividades de integración y entrega continua: revisión de sin
 | Docker | Validación opcional de la construcción del contenedor |
 | GitHub Pages | Hosting de la interfaz HTML/CSS/JS |
 
-## 3. Estructura
 
-```text
-practica3-cicd-itla/
-├── .github/workflows/ci.yml  # Pipeline
-├── docs/
-│   ├── GUIA_DESPLIEGUE.md    # Publicación paso a paso
-│   ├── PIPELINE.md           # Explicación de etapas
-│   └── DEMO_ROJO_VERDE.md    # Demostración de fallos y corrección
-├── public/
-│   ├── index.html            # Interfaz
-│   ├── style.css             # Estilos
-│   └── app.js                # Cliente: API o localStorage
-├── scripts/build.js          # Preparación del sitio para Pages
-├── src/
-│   ├── app.js                # API Express
-│   ├── tareas.js             # Reglas de validación
-│   └── server.js             # Arranque del servidor
-├── tests/
-│   ├── tareas.unit.test.js   # Pruebas unitarias
-│   └── app.test.js           # Pruebas de integración
-├── Dockerfile
-├── .gitignore
-├── .nvmrc
-├── CONTRIBUTING.md
-└── package.json
-```
-
-## 4. Funcionalidades
+## 3. Funcionalidades
 
 - Listar tareas.
 - Crear tareas validando títulos de entre 1 y 80 caracteres.
@@ -73,19 +45,7 @@ practica3-cicd-itla/
 
 **Ejemplo de creación:** `POST /api/tareas` con JSON `{ "titulo": "Configurar pipeline" }`.
 
-## 5. Instalación y uso local
-
-Requisitos: Git y Node.js **20 o superior** (recomendado: Node.js 22). Desde la carpeta del proyecto:
-
-```bash
-npm install
-npm run lint
-npm test
-npm run build
-npm start
-```
-
-Abre `http://localhost:3000`. Las tareas en modo API se guardan en memoria y se reinician con el servidor.
+## 4. Uso local
 
 ### Comandos útiles
 
@@ -99,7 +59,7 @@ Abre `http://localhost:3000`. Las tareas en modo API se guardan en memoria y se 
 
 **Cobertura mínima configurada:** 80 % en sentencias, ramas, funciones y líneas, evaluada por Jest en `src/app.js` y `src/tareas.js`. Si está por debajo, `npm test` falla y el pipeline se detiene.
 
-## 6. ¿Cómo funciona el pipeline?
+## 5. ¿Cómo funciona el pipeline?
 
 ```mermaid
 flowchart TD
@@ -129,13 +89,13 @@ Archivo de configuración: `.github/workflows/ci.yml`.
 
 > Esta práctica implementa **CI y CD como entrega/despliegue del frontend estático**. El backend Express se prueba y su imagen Docker se construye, pero **no se despliega** en Pages.
 
-## 7. Publicación del proyecto
+## 6. Publicación del proyecto
 
 Consulta [Guía de despliegue](docs/GUIA_DESPLIEGUE.md). Para publicación, crea un repositorio **público** vacío, sube los archivos con su carpeta `.github`, habilita **Settings → Pages → Build and deployment → Source: GitHub Actions** y comprueba la pestaña **Actions**.
 
 La dirección será parecida a `https://TU_USUARIO.github.io/TU_REPOSITORIO/`, **solo cuando se publique correctamente**.
 
-## 8. Evidencia de la práctica
+## 7. Evidencia de la práctica
 
 - Captura del repositorio público, mostrando `.github/workflows/ci.yml`.
 - Captura de `npm test` con las pruebas y cobertura.
@@ -146,18 +106,18 @@ La dirección será parecida a `https://TU_USUARIO.github.io/TU_REPOSITORIO/`, *
 
 **Importante:** no declarar exitosos pasos que aún no se hayan comprobado en tu cuenta de GitHub.
 
-## 9. Contribución
+## 8. Contribución
 
 Ver [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## 10. Limitaciones y mejoras futuras
+## 9. Limitaciones y mejoras futuras
 
 - Las tareas del backend permanecen en memoria: no hay base de datos.
 - La demo pública usa `localStorage`, por lo cual las tareas dependen del navegador utilizado.
 - No hay despliegue del servidor Express a un hosting: Pages solo admite contenido estático.
 - Como mejora futura: agregar SQLite, ESLint y publicación de imagen a GHCR.
 
-## 11. Fuentes oficiales
+## 10. Fuentes oficiales
 
 - [GitHub Pages: workflows personalizados](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
 - [GitHub Actions: documentación](https://docs.github.com/en/actions)
